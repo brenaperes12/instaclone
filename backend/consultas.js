@@ -35,5 +35,4 @@ console.table (
 console.table(
     banco
     .prepare(
-        'SELECT post.legenda, usuarios.nome AS autor FROM posts JOIN usuarios ON, usuarios.id = posts.usuario_id WHERE usuario = 'carla'
-        ').all()
+        `SELECT post.legenda, usuarios.nome AS autor FROM posts JOIN usuarios ON usuarios.id = posts.usuario_id WHERE usuario = 'carla'`).all())
