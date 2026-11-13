@@ -120,6 +120,30 @@ app.post('/posts', exigirLogin, upload.single('imagem'), (req, res) => {
   res.status(201).json(novo)
 })
 
+
+// PATCH /perfil -> altera nome, bio e (se vier uma) a foto de perfil
+app.patch('/perfil', exigirLogin, upload.single('foto'), (req, res) => {
+  const nome = (req.body.nome || '').trim()
+  const bio = (req.body.bio || '').trim()
+ 
+  if (nome === '') {
+    return res.status(400).json({ erro: 'O nome não pode ficar vazio.' })
+  }
+  
+  banco
+    .prepare('UPDATE usuarios SET nome = ?, bio = ? WHERE id = ?')
+    .run(nome, bio, req.usuarioId)
+ 
+  // Só troca a foto se a pessoa escolheu uma foto nova
+  if (req.file) {
+    banco
+      .prepare('UPDATE usuarios SET foto = ? WHERE id = ?')
+      .run(req.file.filename, req.usuarioId)
+  }
+ 
+  res.json(buscarPessoa(req.usuarioId))
+})
+
 app.listen(PORTA, () => {
     console.log(`Servidor rodando em http://localhost:${PORTA}`)
 })
