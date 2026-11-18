@@ -4,6 +4,7 @@ import { ImagePlus, Images, Upload, TriangleAlert, Trash2 } from 'lucide-react'
 import { chamarApi, urlFoto } from '../api.js'
 import Avatar from '../componentes/Avatar.jsx'
 import Erro from '../componentes/Erro.jsx'
+import Galeria from '../componentes/Galeria.jsx'
 
 function Perfil() {
   const [pessoa, setPessoa] = useState(null) // começa vazio, até o servidor responder
@@ -87,24 +88,9 @@ function Perfil() {
               </div>
             </article>
           ) : (
-            <div className="d-grid grid-cols-3 gap-1">
-              {pessoa.posts.map((post) => (
-                <div key={post.id} className="position-relative">
-                  <img
-                    className="w-100 ratio-1x1 object-fit-cover"
-                    src={urlFoto(post.imagem)}
-                    alt={post.legenda}
-                  />
-                  <button
-                    type="button"
-                    onClick={() => apagar(post.id)}
-                    className="btn btn-danger btn-sm position-absolute top-0 end-0 m-2"
-                    title="Apagar foto"
-                  >
-                    <Trash2 size={16} />
-                  </button>
-                </div>
-              ))}
+            <div>
+              
+                <Galeria posts={pessoa.posts} apagar={apagar} />
             </div>
           )}
         </>
