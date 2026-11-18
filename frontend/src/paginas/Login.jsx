@@ -1,7 +1,8 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Camera, LogIn, TriangleAlert } from 'lucide-react'
+import { Camera, LogIn} from 'lucide-react'
 import { URL_API } from '../api.js'
+import Erro from '../componentes/Erro.jsx'
 
 function Login() {
   const [usuario, setUsuario] = useState('')
@@ -61,11 +62,7 @@ function Login() {
                   onChange={(evento) => setSenha(evento.target.value)}
                 />
 
-                {erro && (
-                  <div className="alert theme-danger" role="alert">
-                    <TriangleAlert size={18} /> {erro}
-                  </div>
-                )}
+                <Erro mensagem={erro} />
 
                 <button className="btn-solid theme-primary" type="submit">
                   <LogIn size={18} /> Entrar
